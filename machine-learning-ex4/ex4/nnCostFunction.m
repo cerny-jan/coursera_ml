@@ -76,7 +76,7 @@ end;
 
 for k=1:num_labels
   J = J+1/m * sum(-yVectorized(:,k) .* log(h0(:,k)) - (1-yVectorized(:,k)) .* log(1 - h0(:,k)));
-end; 
+end;
 
 regularization = + lambda/(2*m) *(sum(sum(Theta1(:,2:end) .^2)) + sum(sum(Theta2(:,2:end) .^2)));
 
