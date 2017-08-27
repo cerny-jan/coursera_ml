@@ -89,47 +89,44 @@ for k=1:num_labels
 end;
 
 % regularization
-regularization = + lambda/(2*m) *(sum(sum(Theta1(:,2:end) .^2)) + sum(sum(Theta2(:,2:end) .^2)));
+regularization = lambda/(2*m) *(sum(sum(Theta1(:,2:end) .^2)) + sum(sum(Theta2(:,2:end) .^2)));
 
 % Regularized cost function
 J= J + regularization;
 
 
 
-% for t=1:m
-%
-%   % layer 1
-%   a1= [X(t,:),1];
-%
-%   % layer 2
-%   z2=Theta1 * a1;
-%   a2=sigmoid(z2);
-%   a2= [1;a2];
-%
-%   % layer3
-%   z3=Theta2 * a2;
-%   a3 = sigmoid(z3);
-%   h0 = a3;
-%
-%   delta3 = a3-yVectorized(t,:);
-%
-%   delta2 =Theta2'*delta3.*[1;sigmoidGradient(z2)];
-%   delta2=delta2(2:end);
-%
-%
-%
-%   Theta1_grad = Theta1_grad + delta2 * a1'
-%   Theta2_grad = Theta2_grad + delta3 * a2'
-%
-% end;
+for t=1:m
+
+  % layer 1
+  a1 = [1; X(t,:)'];
+
+  % layer 2
+  z2=Theta1 * a1;
+  a2=sigmoid(z2);
+  a2= [1;a2];
+
+  % layer3
+  z3=Theta2 * a2;
+  a3 = sigmoid(z3);
+  h0 = a3;
+
+ % small deltas
+  delta3 = a3-yVectorized(t,:)';
+
+  delta2 =Theta2'*delta3.*[1;sigmoidGradient(z2)];
+  delta2=delta2(2:end);
 
 
+  % big deltas
+  Theta1_grad = Theta1_grad + delta2 * a1';
+  Theta2_grad = Theta2_grad + delta3 * a2';
+
+end;
 
 
-
-
-
-
+Theta1_grad = Theta1_grad/m;
+Theta2_grad = Theta2_grad/m;
 
 
 
