@@ -27,12 +27,12 @@ centroids = zeros(K, n);
 %
 
 for i=1:K
-  % get logical vector where the values belong to current centroid
+  % get logical vector for current centroid
   log_vector = idx==i;
-  
-  % X=X.*log_vector;
-  %
-  % centroids(k,:)=pos;
+  % select values based on log_vector
+  Xk=X(log_vector==1,:);
+  % calculate mean
+  centroids(i,:)=mean(Xk);
 endfor
 
 
